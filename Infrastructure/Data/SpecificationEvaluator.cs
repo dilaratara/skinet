@@ -18,7 +18,24 @@ namespace Infrastructure.Data
                 query = query.Where(spec.Criteria); //example :  p => p.ProductTypeid == id 
             }
 
-            query = spec.Includes.Aggregate(query,(current,include) => current.Include(include));
+            if (spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+
+            if (spec.OrderByDescending != null)
+            {
+                query = query.OrderBy(spec.OrderByDescending); 
+            }
+
+            // paging operators needs to come after filter operations
+
+            if(spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
         }
