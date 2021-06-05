@@ -33,7 +33,7 @@ namespace API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost;4200");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
                 });
             });
 
@@ -52,7 +52,7 @@ namespace API
 
             app.UseStaticFiles();
 
-            app.UseCors("Cors Policy");
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
